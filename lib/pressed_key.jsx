@@ -17,7 +17,7 @@ class PressedKey {
     }
 
     draw(ctx) {
-        ctx.strokeStyle = ""
+        ctx.strokeStyle = "#D2E9E3";
         ctx.beginPath();
         ctx.moveTo(this.pos[0], this.pos[1]);
         ctx.lineTo(this.pos[0] + squareWidth, this.pos[1]);
@@ -28,6 +28,16 @@ class PressedKey {
         ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1] + squareHeight + 10, this.pos[0] - 10, this.pos[1] + squareHeight);
         ctx.lineTo(this.pos[0] - 10, this.pos[1] + 10);
         ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1], this.pos[0], this.pos[1]);
-
     }
+
+    successHit(note) {
+        if ((note.pos[1] > (this.pos[1] + this.squareHeight / 3)) && (note.pos[1] > (this.pos[1] - this.squareHeight / 3))){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
+
+export default PressedKey;

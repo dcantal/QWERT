@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+
+        }
+    </style>
+    <link rel="stylesheet" href="./stylesheets/title.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300" rel="stylesheet">
+    <!-- <script type="text/javascript" src="game.js"></script> -->
+</head>
+
+<body>
+
+    <div class="full-page">
+        <div class="body-left">
+            <h1>GITHUB</h1>
+            <h1>LINKEDIN</h1>
+        </div>
+        <canvas id="myCanvas" width="600" height=900 style="background-color: #A8D1E7;"></canvas>
+        <div class="body-right">
+            <h1>MUTE</h1>
+        </div>
+    </div>
+
+    <script>
+        let canvas = document.getElementById("myCanvas");
+        let ctx = canvas.getContext("2d");
+        ctx.canvas.height = window.innerHeight;     
+        ctx.font = '50px Josefin Sans';   
+
+        let keyOffsetLeft = 50;
+        let keyWidth = 60;
+        let keyHeight = 60;
+        let starting1x = 50;
+        let starting1y = 90;
+        let starting2x = 160;
+        let starting2y = 250;
+        let starting3x = 380;
+        let starting3y = 400;
+        let dy = -5;
+
+        let key_vals = ["q", "w", "e", "r", "t"];
+        let keys = [];
+        for (let i = 0; i < 5; i++) {
+            keys[i] = { x: 0, y: 10, width: keyWidth, height: keyHeight, value: key_vals[i]};
+        }
+
+
+        function drawKeys() {
+            for (let i = 0; i < 5; i++) {
+                let keyX = (i * (keyWidth)) + ((i+1) * keyOffsetLeft); //30 --- 90
+                let keyY = 10;
+
+                keys[i] = {x: keyX, y: keyY, width: keyWidth, height: keyHeight}
+                ctx.font = "50px Arial";
+                drawSquare(keys[i]);
+                ctx.fillStyle = "white";
+                // ctx.fillText("Q", canvas.width / 5 - 60, 60);
+                // ctx.fillText("W", canvas.width * 2 / 5 - 70, 60);
+                // ctx.fillText("E", canvas.width * 3 / 5 - 80, 60);
+                // ctx.fillText("R", canvas.width * 4 / 5 - 90, 60);
+                // ctx.fillText("T", canvas.width - 95, 60);
+                ctx.closePath();
+            }
+        }
+
+        // drawKeys();
+
+        function drawSquare(square) {
+            let squareX = square.x;
+            let squareY = square.y;
+            let squareWidth = square.width;
+            let squareHeight = square.height;
+            ctx.beginPath();
+            ctx.moveTo(squareX, squareY); 
+            ctx.lineTo(squareX + squareWidth, squareY); 
+            ctx.quadraticCurveTo(squareX + squareWidth + 10, squareY, squareX + squareWidth + 10, squareY + 10); 
+            ctx.lineTo(squareX + squareWidth + 10, squareY + squareHeight); 
+            ctx.quadraticCurveTo(squareX + squareWidth + 10, squareY + squareHeight + 10, squareX + squareWidth, squareY + squareHeight + 10); 
+            ctx.lineTo(squareX, squareY + squareHeight + 10); 
+            ctx.quadraticCurveTo(squareX - 10, squareY + squareHeight + 10, squareX - 10, squareY + squareHeight); 
+            ctx.lineTo(squareX - 10, squareY + 10); 
+            ctx.quadraticCurveTo(squareX - 10, squareY, squareX, squareY); 
+            // ctx,strokeStyle = "black";
+            ctx.stroke();
+            ctx.closePath();
+
+        }
+        
+        function drawNote() {
+            if (starting1y < -60) {
+                starting1y = 800;
+            }
+            let note = {x: starting1x, y: starting1y, width: keyWidth, height: keyHeight};
+            drawSquare(note);
+            ctx.fillStyle = "#24315E";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawNote2() {
+            if (starting2y < -60) {
+                starting2y = 800;
+            }
+            let note = {x: starting2x, y: starting2y, width: keyWidth, height: keyHeight};
+            drawSquare(note);
+            ctx.fillStyle = "#F8E9A0";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawNote3() {
+            if (starting3y < -60) {
+                starting3y = 800;
+            }
+            let note = {x: starting3x, y: starting3y, width: keyWidth, height: keyHeight};
+            drawSquare(note);
+            ctx.fillStyle = "#F76D6D";
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+        let note2 = {x: 160, y: 150, width: keyWidth, height: keyHeight};
+        let note3 = {x: 50, y: 300, width: keyWidth, height: keyHeight};
+        let note4 = {x: 270, y: 400, width: keyWidth, height: keyHeight};
+        let note5 = {x: 490, y: 450, width: keyWidth, height: keyHeight};
+        let note6 = {x: 380, y: 600, width: keyWidth, height: keyHeight};
+        let note7 = {x: 490, y: 600, width: keyWidth, height: keyHeight};
+        // let notes = [note,note2,note3,note4,note5,note6,note7];
+
+
+        function drawNotes(notes) {
+            for (i = 0; i < 7; i++ ) {
+                drawNote(notes[i]);
+            }
+        }
+
+        // document.addEventListener("keydown", keyDownHandler, false);
+        // document.addEventListener("keyup", keyUpHandler, false);
+
+        // function keyDownHandler(e) {
+        //     if (e.key == "Q" || e.key == "KeyQ") {
+        //         rightPressed = true;
+        //     }
+        //     else if (e.key == "W" || e.key == "KeyW") {
+        //         leftPressed = true;
+        //     }
+        // }
+
+        // function keyUpHandler(e) {
+        //     if (e.key == "Q" || e.key == "KeyQ") {
+        //         rightPressed = false;
+        //     }
+        //     else if (e.key == "W" || e.key == "KeyW") {
+        //         leftPressed = false;
+        //     }
+        // }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawKeys();
+            // drawNotes([note, note2, note3, note4, note5, note6, note7]);
+            drawNote();
+            drawNote2();
+            drawNote3();
+            starting1y += dy;
+            starting2y += dy;
+            starting3y += dy;
+        }
+
+        draw();
+
+        setInterval(draw, 10);
+
+    </script>
+
+
+</body>
+
+</html>

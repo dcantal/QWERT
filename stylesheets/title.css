@@ -1,0 +1,23 @@
+.full-page {
+    display: flex;
+    justify-content: space-evenly
+}
+
+.body-left {
+    padding-top: 10%;
+    width: 33%;
+    background-color: #F76D6D;
+    color: white;
+}
+
+.body-right {
+    width: 33%;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #24315E;
+    color: white;
+}
+
+* {
+    font-family: Josefin Sans;
+}

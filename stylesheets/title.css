@@ -1,21 +1,22 @@
 .full-page {
     display: flex;
-    justify-content: space-evenly
+    justify-content: space-evenly;
+    background-color: #272727;
 }
 
 .body-left {
     padding-top: 10%;
     width: 33%;
-    background-color: #F76D6D;
-    color: white;
+    /* background-color: #272727; */
+    color: #747474;
 }
 
 .body-right {
     width: 33%;
     display: flex;
     justify-content: flex-end;
-    background-color: #24315E;
-    color: white;
+    /* background-color: #272727; */
+    color: #747474;
 }
 
 * {

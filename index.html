@@ -11,9 +11,9 @@
         }
 
         canvas {
-            background: #eee;
             display: block;
             margin: 0 auto;
+            background: #272727;
 
         }
     </style>
@@ -29,7 +29,7 @@
             <h1>GITHUB</h1>
             <h1>LINKEDIN</h1>
         </div>
-        <canvas id="myCanvas" width="600" height=900 style="background-color: #A8D1E7;"></canvas>
+        <canvas id="myCanvas" width="600" height=900></canvas>
         <div class="body-right">
             <h1>MUTE</h1>
         </div>
@@ -67,12 +67,12 @@
                 keys[i] = {x: keyX, y: keyY, width: keyWidth, height: keyHeight}
                 ctx.font = "50px Arial";
                 drawSquare(keys[i]);
-                ctx.fillStyle = "white";
-                // ctx.fillText("Q", canvas.width / 5 - 60, 60);
-                // ctx.fillText("W", canvas.width * 2 / 5 - 70, 60);
-                // ctx.fillText("E", canvas.width * 3 / 5 - 80, 60);
-                // ctx.fillText("R", canvas.width * 4 / 5 - 90, 60);
-                // ctx.fillText("T", canvas.width - 95, 60);
+                ctx.fillStyle = "#747474";
+                ctx.fillText("Q", canvas.width / 5 - 60, 60);
+                ctx.fillText("W", canvas.width * 2 / 5 - 70, 60);
+                ctx.fillText("E", canvas.width * 3 / 5 - 80, 60);
+                ctx.fillText("R", canvas.width * 4 / 5 - 90, 60);
+                ctx.fillText("T", canvas.width - 95, 60);
                 ctx.closePath();
             }
         }
@@ -106,7 +106,7 @@
             }
             let note = {x: starting1x, y: starting1y, width: keyWidth, height: keyHeight};
             drawSquare(note);
-            ctx.fillStyle = "#24315E";
+            ctx.fillStyle = "#FF652F";
             ctx.fill();
             ctx.closePath();
         }
@@ -117,7 +117,7 @@
             }
             let note = {x: starting2x, y: starting2y, width: keyWidth, height: keyHeight};
             drawSquare(note);
-            ctx.fillStyle = "#F8E9A0";
+            ctx.fillStyle = "#FFE403";
             ctx.fill();
             ctx.closePath();
         }
@@ -128,7 +128,7 @@
             }
             let note = {x: starting3x, y: starting3y, width: keyWidth, height: keyHeight};
             drawSquare(note);
-            ctx.fillStyle = "#F76D6D";
+            ctx.fillStyle = "#11A76B";
             ctx.fill();
             ctx.closePath();
         }

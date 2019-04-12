@@ -90,24 +90,24 @@
 /*!**********************************!*\
   !*** ./beatmaps/test_beatmap.js ***!
   \**********************************/
-/*! exports provided: beatmap */
+/*! exports provided: BEATMAP */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "beatmap", function() { return beatmap; });
-const beatmap = [
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BEATMAP", function() { return BEATMAP; });
+const BEATMAP = [
+    "w","","","t",
     "","","","",
     "","","","",
-    "","","","",
-    "","q","","",
+    "","r","","",
     "","","","",
     "","","","",
     "","","","",
     "","","","",
     "","","","e",
     "","","","",
-    "","","","",
+    "","","r","",
     "","","","",
     "","","","",
     "","","","",
@@ -122,7 +122,7 @@ const beatmap = [
     "","","","",
     "","","","",
     "","","","",
-    "","","","",
+    "","r","","",
     "","","","",
     "","","","",
     "","","","",
@@ -187,7 +187,7 @@ const beatmap = [
     "","","","",
     "","","","",
     "","","","",
-    "","","","",
+    "","","t","",
     "","","","",
     "","","","",
     "","","","",
@@ -211,7 +211,7 @@ const beatmap = [
     "","","","",
     "","","","",
     "","","","",
-    "","q","","",
+    "","r","","",
     "","","","",
     "","","","",
     "","","","y",
@@ -249,6 +249,7 @@ class Game {
         this.tPressed = false;
         this.keyDownHandler = this.keyDownHandler.bind(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
+        this.addBeatmap = this.addBeatmap.bind(this);
     }
 
     addListeners() {
@@ -314,14 +315,15 @@ class Game {
             case ("t" || false || false):
                 this.tPressed = false;
                 this.gameplay.removePressedKey();
-                this.gameplay.addNote1();
-                this.gameplay.addNote2();
+                // this.gameplay.addNote1();
+                // this.gameplay.addNote2();
                 break;
         }
     }
 
     addBeatmap(beatmap){
-        beatmap.forEach((beat) => {
+        // beatmap.forEach((beat) => {
+        beatmap.shift().split("").forEach((beat) => {
             this.gameplay.addNote(beat);
         });
     }
@@ -330,7 +332,11 @@ class Game {
         this.gameplay.drawPressedKeys(this.ctx);
         this.gameplay.drawNotes(this.ctx);
         this.gameplay.runMap();
-        requestAnimationFrame(this.draw.bind(this));
+    }
+    
+    animate() {
+        this.draw();
+        requestAnimationFrame(this.animate.bind(this));
     }
 }
 
@@ -357,6 +363,8 @@ class Gameplay {
         this.notes = [];
         this.pressedKeys = [];
         this.topKeys = topKeys;
+        this.values = ["q", "w", "e", "r", "t"];
+        this.addRandomNote = this.addRandomNote.bind(this);
     }
 
     addPressedKey(ctx, val) {
@@ -370,28 +378,27 @@ class Gameplay {
                 this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
                 break;
             case "w":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,800], val: "q"}));
                 break;
             case "e":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [270,800], val: "q"}));
                 break;
             case "r":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [380,800], val: "q"}));
                 break;
             case "t":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [490,800], val: "q"}));
                 break;
         }
     }
 
     // addNote(key) {
     addNote1() {
-        debugger
-        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,400], val: "q"});
+        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,2000], val: "q"});
         this.notes.push(note);
     }
     addNote2() {
-        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,500], val: "w"});
+        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,900], val: "w"});
         this.notes.push(note);
     }
 
@@ -412,7 +419,6 @@ class Gameplay {
     }
 
     removePressedKey() {
-        debugger
         this.pressedKeys.splice(0,1);
     }
 
@@ -423,19 +429,21 @@ class Gameplay {
     checkSuccess() {
         this.pressedKeys.forEach((pressedKey) => {
             this.notes.forEach((note) => {
-                debugger
                 if (pressedKey.successHit(note)) {
-                    debugger
                     this.removeNote(note);
                     console.log("Score + 10!");
                 }
-                debugger
             });
         });
     }
 
     missed(note) {
-        return (note.pos[1] < -20) ? true : false;
+        if (note.pos[1] < -20) {
+            console.log("missed");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     runMap() {
@@ -443,6 +451,14 @@ class Gameplay {
             return (this.missed(note)) ? this.removeNote(note) : note.move();
         });
     }
+
+    addRandomNote() {
+        let key = this.values[Math.floor(Math.random() * 5)];
+        console.log(key);
+        this.addNote(key);
+    }
+
+
 
 }
 
@@ -472,7 +488,6 @@ class Note {
     }
     
     draw(ctx) {
-        debugger
         ctx.beginPath();
         ctx.moveTo(this.pos[0], this.pos[1]);
         ctx.lineTo(this.pos[0] + this.squareWidth, this.pos[1]);
@@ -549,12 +564,9 @@ class PressedKey {
     }
 
     successHit(note) {
-        debugger
         if (((note.pos[1] < (this.pos[1] + this.squareHeight/2)) && (note.pos[1] > (this.pos[1] - this.squareHeight/2))) && this.val == note.val){
-            debugger
             return true;
         } else {
-            debugger
             return false;
         }
     }
@@ -583,6 +595,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 if (document.readyState !== 'loading') {
     console.log ('already loaded');
 }
@@ -591,13 +604,16 @@ if (document.readyState !== 'loading') {
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
+    const beatMap = _beatmaps_test_beatmap__WEBPACK_IMPORTED_MODULE_3__["BEATMAP"];
     ctx.canvas.height = window.innerHeight;
     const topKeys = new _top_keys__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
     const gameplay = new _gameplay__WEBPACK_IMPORTED_MODULE_1__["default"](topKeys);
-    const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx);
-    game.addListeners();
-    game.draw();
+    const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx, beatMap);
 
+    // game.addBeatmap(beatMap);
+    game.addListeners();
+    game.animate();
+    setInterval(gameplay.addRandomNote, 1000);
     
 });
 

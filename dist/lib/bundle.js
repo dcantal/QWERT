@@ -86,6 +86,148 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./beatmaps/test_beatmap.js":
+/*!**********************************!*\
+  !*** ./beatmaps/test_beatmap.js ***!
+  \**********************************/
+/*! exports provided: beatmap */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "beatmap", function() { return beatmap; });
+const beatmap = [
+    "","","","",
+    "","","","",
+    "","","","",
+    "","q","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","e",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "r","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","t","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","y",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "r","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","y",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","e","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","y","","",
+    "","","","",
+    "","","","",
+    "","","","y",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","w","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","y",
+    "","","","",
+    "","","","",
+    "","","t","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","q","","",
+    "","","","",
+    "","","","",
+    "","","","y",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "","","","",
+    "e","","","",
+    "","","","",
+];
+
+/***/ }),
+
 /***/ "./lib/game.js":
 /*!*********************!*\
   !*** ./lib/game.js ***!
@@ -96,9 +238,10 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Game {
-    constructor(gameplay, ctx) {
+    constructor(gameplay, ctx, beatMap) {
         this.gameplay = gameplay;
         this.ctx = ctx;
+        this.beatMap = beatMap;
         this.qPressed = false;
         this.wPressed = false;
         this.ePressed = false;
@@ -109,7 +252,6 @@ class Game {
     }
 
     addListeners() {
-        debugger
         document.addEventListener("keydown", this.keyDownHandler, false);
         document.addEventListener("keyup", this.keyUpHandler, false);
     }
@@ -121,35 +263,30 @@ class Game {
             case ("q" || false || false):
                 if (this.qPressed == false) {
                     this.qPressed = true;
-                    console.log("Q is being pressed");
                     this.gameplay.addPressedKey(this.ctx, "q");
                 }
                 break;
             case ("w" || false || false):
                 if (this.wPressed == false) {
                     this.wPressed = true;
-                    console.log("W is being pressed");
                     this.gameplay.addPressedKey(this.ctx,"w");
                 }
                 break;
             case ("e" || false || false):
                 if (this.ePressed == false) {
                     this.ePressed = true;
-                    console.log("E is being pressed");
                     this.gameplay.addPressedKey(this.ctx,"e");
                 }
                 break;
             case ("r" || false || false):
                 if (this.rPressed == false) {
                     this.rPressed = true;
-                    console.log("R is being pressed");
                     this.gameplay.addPressedKey(this.ctx,"r");
                 }
                 break;
             case ("t" || false || false):
                 if (this.tPressed == false) {
                     this.tPressed = true;
-                    console.log("T is being pressed");
                     this.gameplay.addPressedKey(this.ctx,"t");
                 }
                 break;
@@ -160,37 +297,41 @@ class Game {
         switch (e.key) {
             case ("q" || false || false):
                 this.qPressed = false;
-                console.log("Q is no longer being pressed");
                 this.gameplay.removePressedKey();
                 break;
             case ("w" || false || false):
                 this.wPressed = false;
-                console.log("W is no longer being pressed");
                 this.gameplay.removePressedKey();
                 break;
             case ("e" || false || false):
                 this.ePressed = false;
-                console.log("E is no longer being pressed");
                 this.gameplay.removePressedKey();
                 break;
             case ("r" || false || false):
                 this.rPressed = false;
-                console.log("R is no longer being pressed");
                 this.gameplay.removePressedKey();
                 break;
             case ("t" || false || false):
                 this.tPressed = false;
-                console.log("T is no longer being pressed");
                 this.gameplay.removePressedKey();
+                this.gameplay.addNote1();
+                this.gameplay.addNote2();
                 break;
         }
     }
 
-    draw() {
-        this.gameplay.draw(this.ctx);
-        requestAnimationFrame(this.draw.bind(this));
+    addBeatmap(beatmap){
+        beatmap.forEach((beat) => {
+            this.gameplay.addNote(beat);
+        });
     }
 
+    draw() {
+        this.gameplay.drawPressedKeys(this.ctx);
+        this.gameplay.drawNotes(this.ctx);
+        this.gameplay.runMap();
+        requestAnimationFrame(this.draw.bind(this));
+    }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Game);
@@ -213,33 +354,94 @@ __webpack_require__.r(__webpack_exports__);
 
 class Gameplay {
     constructor(topKeys) {
-        this.q_notes = [];
-        this.w_notes = [];
-        this.e_notes = [];
-        this.r_notes = [];
-        this.t_notes = [];
+        this.notes = [];
         this.pressedKeys = [];
         this.topKeys = topKeys;
     }
 
     addPressedKey(ctx, val) {
-        debugger
         let key = new _pressed_key__WEBPACK_IMPORTED_MODULE_1__["default"]({ val: val});
         this.pressedKeys.push(key);
     }
 
-    draw(ctx){
+    addNote(key) {
+        switch(key) {
+            case "q":
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                break;
+            case "w":
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                break;
+            case "e":
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                break;
+            case "r":
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                break;
+            case "t":
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
+                break;
+        }
+    }
+
+    // addNote(key) {
+    addNote1() {
+        debugger
+        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,400], val: "q"});
+        this.notes.push(note);
+    }
+    addNote2() {
+        let note = new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,500], val: "w"});
+        this.notes.push(note);
+    }
+
+    drawPressedKeys(ctx){
         ctx.clearRect(0, 0, 600, 717);
         this.topKeys.draw(ctx);
         this.pressedKeys.forEach((key) => {
             key.draw(ctx);
         });
+        this.checkSuccess();
     }
 
-    // removePressedKey(key) {
+    drawNotes(ctx){
+        // ctx.clearRect(0, 0, 600, 717);
+        this.notes.forEach((note) => {
+            note.draw(ctx);
+        });
+    }
+
     removePressedKey() {
-        // this.pressedKeys.splice(this.pressedKeys.indexOf(key),1);
+        debugger
         this.pressedKeys.splice(0,1);
+    }
+
+    removeNote(note) {
+        this.notes.splice(this.notes.indexOf(note),1);
+    }
+
+    checkSuccess() {
+        this.pressedKeys.forEach((pressedKey) => {
+            this.notes.forEach((note) => {
+                debugger
+                if (pressedKey.successHit(note)) {
+                    debugger
+                    this.removeNote(note);
+                    console.log("Score + 10!");
+                }
+                debugger
+            });
+        });
+    }
+
+    missed(note) {
+        return (note.pos[1] < -20) ? true : false;
+    }
+
+    runMap() {
+        this.notes.forEach((note) => {
+            return (this.missed(note)) ? this.removeNote(note) : note.move();
+        });
     }
 
 }
@@ -264,22 +466,27 @@ class Note {
         this.squareWidth = 60;
         this.squareHeight = 60;
     }
-
+    
+    move () {
+        this.pos = [this.pos[0], this.pos[1] - 10];
+    }
+    
     draw(ctx) {
+        debugger
         ctx.beginPath();
         ctx.moveTo(this.pos[0], this.pos[1]);
-        ctx.lineTo(this.pos[0] + squareWidth, this.pos[1]);
-        ctx.quadraticCurveTo(this.pos[0] + squareWidth + 10, this.pos[1], this.pos[0] + squareWidth + 10, this.pos[1] + 10);
-        ctx.lineTo(this.pos[0] + squareWidth + 10, this.pos[1] + squareHeight);
-        ctx.quadraticCurveTo(this.pos[0] + squareWidth + 10, this.pos[1] + squareHeight + 10, this.pos[0] + squareWidth, this.pos[1] + squareHeight + 10);
-        ctx.lineTo(this.pos[0], this.pos[1] + squareHeight + 10);
-        ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1] + squareHeight + 10, this.pos[0] - 10, this.pos[1] + squareHeight);
+        ctx.lineTo(this.pos[0] + this.squareWidth, this.pos[1]);
+        ctx.quadraticCurveTo(this.pos[0] + this.squareWidth + 10, this.pos[1], this.pos[0] + this.squareWidth + 10, this.pos[1] + 10);
+        ctx.lineTo(this.pos[0] + this.squareWidth + 10, this.pos[1] + this.squareHeight);
+        ctx.quadraticCurveTo(this.pos[0] + this.squareWidth + 10, this.pos[1] + this.squareHeight + 10, this.pos[0] + this.squareWidth, this.pos[1] + this.squareHeight + 10);
+        ctx.lineTo(this.pos[0], this.pos[1] + this.squareHeight + 10);
+        ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1] + this.squareHeight + 10, this.pos[0] - 10, this.pos[1] + this.squareHeight);
         ctx.lineTo(this.pos[0] - 10, this.pos[1] + 10);
         ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1], this.pos[0], this.pos[1]);
         if (this.val == "q") {
-            ctx.fillStyle = "#24315E";
+            ctx.fillStyle = "#202833";
         } else if (this.val == "w") {
-            ctx.fillStyle = "#F8E9A0";
+            ctx.fillStyle = "#C5C6C8";
         } else if (this.val == "e") {
             ctx.fillStyle = "#F76D6D";
         } else if (this.val == "r") {
@@ -292,9 +499,6 @@ class Note {
     }
 
 
-    rise () {
-        this.pos = [this.pos[0], this.pos[1] - 10];
-    }
 
 }
 
@@ -330,7 +534,7 @@ class PressedKey {
     }
 
     draw(ctx) {
-        ctx.strokeStyle = "#D2E9E3";
+        ctx.fillStyle ="#67FCF1";
         ctx.beginPath();
         ctx.moveTo(this.pos[0], this.pos[1]);
         ctx.lineTo(this.pos[0] + this.squareWidth, this.pos[1]);
@@ -345,9 +549,12 @@ class PressedKey {
     }
 
     successHit(note) {
-        if ((note.pos[1] > (this.pos[1] + this.squareHeight / 3)) && (note.pos[1] > (this.pos[1] - this.squareHeight / 3))){
+        debugger
+        if (((note.pos[1] < (this.pos[1] + this.squareHeight/2)) && (note.pos[1] > (this.pos[1] - this.squareHeight/2))) && this.val == note.val){
+            debugger
             return true;
         } else {
+            debugger
             return false;
         }
     }
@@ -370,6 +577,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./lib/game.js");
 /* harmony import */ var _gameplay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gameplay */ "./lib/gameplay.js");
 /* harmony import */ var _top_keys__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./top_keys */ "./lib/top_keys.js");
+/* harmony import */ var _beatmaps_test_beatmap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../beatmaps/test_beatmap */ "./beatmaps/test_beatmap.js");
+
 
 
 
@@ -418,6 +627,7 @@ class TopKeys {
     }
 
     draw(ctx) {
+
         ctx.clearRect(0, 0, 600, 717);
         for (let i = 0; i < 5; i++) {
             // ctx.font = "500 px Arial";
@@ -448,8 +658,9 @@ class TopKeys {
             ctx.quadraticCurveTo(this.squareX - 10, this.squareY + this.squareHeight + 10, this.squareX - 10, this.squareY + this.squareHeight);
             ctx.lineTo(this.squareX - 10, this.squareY + 10);
             ctx.quadraticCurveTo(this.squareX - 10, this.squareY, this.squareX, this.squareY);
+            ctx.strokeStyle = "#67FCF1";
             ctx.stroke();
-            ctx.fillStyle = "#747474";
+            ctx.fillStyle = "#67FCF1";
             ctx.fillText("Q", 600 / 5 - 60, 60);
             ctx.fillText("W", 600 * 2 / 5 - 70, 60);
             ctx.fillText("E", 600 * 3 / 5 - 80, 60);

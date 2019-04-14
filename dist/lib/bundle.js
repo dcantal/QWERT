@@ -378,16 +378,16 @@ class Gameplay {
                 this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [50,800], val: "q"}));
                 break;
             case "w":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [160,800], val: "w"}));
                 break;
             case "e":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [270,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [270,800], val: "e"}));
                 break;
             case "r":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [380,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [380,800], val: "r"}));
                 break;
             case "t":
-                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [490,800], val: "q"}));
+                this.notes.push(new _note_js__WEBPACK_IMPORTED_MODULE_0__["default"]({pos: [490,800], val: "t"}));
                 break;
         }
     }
@@ -454,7 +454,6 @@ class Gameplay {
 
     addRandomNote() {
         let key = this.values[Math.floor(Math.random() * 5)];
-        console.log(key);
         this.addNote(key);
     }
 
@@ -499,15 +498,15 @@ class Note {
         ctx.lineTo(this.pos[0] - 10, this.pos[1] + 10);
         ctx.quadraticCurveTo(this.pos[0] - 10, this.pos[1], this.pos[0], this.pos[1]);
         if (this.val == "q") {
-            ctx.fillStyle = "#202833";
+            ctx.fillStyle = "#E27C5F";
         } else if (this.val == "w") {
-            ctx.fillStyle = "#C5C6C8";
+            ctx.fillStyle = "#8265A7";
         } else if (this.val == "e") {
-            ctx.fillStyle = "#F76D6D";
+            ctx.fillStyle = "#E7A87C";
         } else if (this.val == "r") {
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "#C38C9D";
         } else {
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "#41B3A2";
         }
         ctx.fill();
         ctx.closePath();
@@ -596,10 +595,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-if (document.readyState !== 'loading') {
-    console.log ('already loaded');
-}
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("myCanvas");
@@ -613,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // game.addBeatmap(beatMap);
     game.addListeners();
     game.animate();
-    setInterval(gameplay.addRandomNote, 1000);
+    setInterval(gameplay.addRandomNote, 500);
     
 });
 

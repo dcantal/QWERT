@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-evenly;
     background-color: #0B0C0F;
+    padding: 20px;
 }
 
 .body-left {
@@ -39,6 +40,7 @@ a:visited {
 
 #play:hover {
     cursor: pointer;
+    border: 2px solid #67FCF1;
 }
 
 #play {

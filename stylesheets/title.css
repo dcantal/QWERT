@@ -22,3 +22,17 @@
 * {
     font-family: Josefin Sans;
 }
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #747474;
+}
+
+.menu {
+    color: white;
+    margin-top: 10%;
+}

@@ -615,11 +615,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const topKeys = new _top_keys__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
     const gameplay = new _gameplay__WEBPACK_IMPORTED_MODULE_1__["default"](topKeys);
     const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx, beatMap);
+    const play = document.getElementById("play");
 
     // game.addBeatmap(beatMap);
     game.addListeners();
-    game.animate();
-    setInterval(gameplay.addRandomNote, 500);
+
+    play.addEventListener("click", () => {
+        game.animate();
+        // setTimeout(() => { game.animate(); }, 5000);
+    });
+
+    setTimeout(() => {setInterval(gameplay.addRandomNote, 500); }, 5000);
     
 });
 

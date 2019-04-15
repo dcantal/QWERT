@@ -247,6 +247,7 @@ class Game {
         this.ePressed = false;
         this.rPressed = false;
         this.tPressed = false;
+        this.paused = false;
         this.keyDownHandler = this.keyDownHandler.bind(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
         this.addBeatmap = this.addBeatmap.bind(this);
@@ -291,6 +292,14 @@ class Game {
                     this.gameplay.addPressedKey(this.ctx,"t");
                 }
                 break;
+            case ("p" || false || false):
+                if (this.paused == false) {
+                    this.paused = true;
+                }
+                else if (this.paused){
+                    this.paused = false;
+                }
+                break;
         }
     }
 
@@ -329,9 +338,11 @@ class Game {
     }
 
     draw() {
-        this.gameplay.drawPressedKeys(this.ctx);
-        this.gameplay.drawNotes(this.ctx);
-        this.gameplay.runMap();
+        if (!this.paused) {
+            this.gameplay.drawPressedKeys(this.ctx);
+            this.gameplay.drawNotes(this.ctx);
+            this.gameplay.runMap();
+        }
     }
     
     animate() {

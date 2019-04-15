@@ -36,3 +36,11 @@ a:visited {
     color: white;
     margin-top: 10%;
 }
+
+#play:hover {
+    cursor: pointer;
+}
+
+#play {
+    color: #67FCF1;
+}

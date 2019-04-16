@@ -18,7 +18,7 @@
         }
     </style>
     <link rel="stylesheet" href="./stylesheets/title.css">
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,700" rel="stylesheet">
     <script type="application/javascript" src="dist/lib/bundle.js"></script>
 </head>
 
@@ -26,25 +26,42 @@
 
     <div class="full-page">
         <div class="body-left">
-            <a href="https://www.github.com/dcantal"><h1>GITHUB</h1></a>
-            <a href="https://www.linkedin.com/in/danteacantal"><h1>LINKEDIN</h1></a>
-            <div class="menu">
-                <h1> This is QWERT. </h1>
-                <br>
-                <br>
-                <h2> Use the QWERT keys to hit the rising note blocks when they align with the QWERT blocks.</h2>
-                <br>
-                <br>
-                <h2> Press P at any time to pause the game.</h2>
-                <br>
-                <br>
-                <br>
-                <h1 id="play"> Play. </h1>
-            </div>
+            <a href="https://www.github.com/dcantal" target="_blank" class="social-links"><h1>GITHUB</h1></a>
+            <a href="https://www.linkedin.com/in/danteacantal" target="_blank" class="social-links"><h1>LINKEDIN</h1></a>
+
         </div>
-        <canvas id="myCanvas" width="600" height=500></canvas>
+        <div class="center">
+            <div id="menu" class="fade-in">
+                <div class="title-text-div">
+                    <h1 id="title-text">QWERT</h1>
+                </div>
+                <br>
+                <br>
+                <div class="menu-text">
+                    <h2> Use the QWERT keys to hit the rising note blocks when they align with the QWERT blocks.</h2>
+                    <br>
+                    <br>
+                    <h2> Press P at any time to pause the game.</h2>
+                </div>
+                <br>
+                <br>
+                <br>
+                <h1 id="play">&nbsp;PLAY</h1>
+            </div>
+            <div id="pause-menu" class="hidden">
+                <h1>PAUSED</h1>
+                <h2>Press P to continue</h2>
+            </div>
+            <div id="game-over" class="hidden">
+                <h1>GAME OVER</h1>
+                <h2>Press something to continue</h2>
+            </div>
+            <canvas id="myCanvas" width="600" height=500 class="hidden"></canvas>
+        </div>
         <div class="body-right">
-            <h1>MUTE</h1>
+            <!-- <h1>MUTE</h1> -->
+            <h1 id="score-text"></h1>
+            <!-- <canvas id="scoreCanvas" class="hidden"></canvas> -->
         </div>
     </div>
 

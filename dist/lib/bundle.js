@@ -247,10 +247,12 @@ class Game {
         this.ePressed = false;
         this.rPressed = false;
         this.tPressed = false;
+        this.allPressed = false;
         this.paused = false;
         this.keyDownHandler = this.keyDownHandler.bind(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
         this.addBeatmap = this.addBeatmap.bind(this);
+        this.pauseMenu = document.getElementById("pause-menu");
     }
 
     addListeners() {
@@ -338,11 +340,19 @@ class Game {
     }
 
     draw() {
-        if (!this.paused) {
+        if (!this.paused && !this.gameplay.gameOver) {
+            this.pauseMenu.className = "hidden";
             this.gameplay.drawPressedKeys(this.ctx);
             this.gameplay.drawNotes(this.ctx);
             this.gameplay.runMap();
         }
+        else if (this.paused) {
+            this.pauseMenu.className = "";
+        }
+        else if (this.gameplay.gameOver) {
+            this.gameplay.gameOverScreen.className = "";
+        }
+
     }
     
     animate() {
@@ -376,11 +386,18 @@ class Gameplay {
         this.topKeys = topKeys;
         this.values = ["q", "w", "e", "r", "t"];
         this.addRandomNote = this.addRandomNote.bind(this);
+        this.score = 0;
+        this.scoreDiv = document.getElementById("score-text");
+        this.gameOver = false;
+        this.gameOverScreen = document.getElementById("game-over");
     }
 
     addPressedKey(ctx, val) {
         let key = new _pressed_key__WEBPACK_IMPORTED_MODULE_1__["default"]({ val: val});
         this.pressedKeys.push(key);
+        setTimeout(() => {
+            this.removePressedKey(key);
+        }, 1000);
     }
 
     addNote(key) {
@@ -414,12 +431,13 @@ class Gameplay {
     }
 
     drawPressedKeys(ctx){
-        ctx.clearRect(0, 0, 600, 717);
+        ctx.clearRect(0, 0, 600, 1000);
         this.topKeys.draw(ctx);
         this.pressedKeys.forEach((key) => {
             key.draw(ctx);
         });
         this.checkSuccess();
+        this.checkOver();
     }
 
     drawNotes(ctx){
@@ -442,15 +460,28 @@ class Gameplay {
             this.notes.forEach((note) => {
                 if (pressedKey.successHit(note)) {
                     this.removeNote(note);
-                    console.log("Score + 10!");
+                    this.score += 10;
+                    this.scoreDiv.innerText = "SCORE: " + this.score.toString();
+                    console.log(this.score);
                 }
             });
         });
     }
 
+    checkOver() {
+        if (this.score < -200) {
+            this.scoreDiv.innerText = "SCORE: " + this.score.toString();
+            console.log(this.score);
+            this.gameOver = true;
+        }
+    }
+
     missed(note) {
         if (note.pos[1] < -20) {
             console.log("missed");
+            this.score -= 10;
+            this.scoreDiv.innerText = "SCORE: " + this.score.toString();
+            console.log(this.score);
             return true;
         } else {
             return false;
@@ -612,20 +643,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     const beatMap = _beatmaps_test_beatmap__WEBPACK_IMPORTED_MODULE_3__["BEATMAP"];
     ctx.canvas.height = window.innerHeight-20;
+    const score = document.getElementById("score-text");
+    // const ctxScore = score.getContext("2d");
+    // ctxScore.canvas.height = window.innerHeight-20;
     const topKeys = new _top_keys__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
     const gameplay = new _gameplay__WEBPACK_IMPORTED_MODULE_1__["default"](topKeys);
     const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx, beatMap);
+    const menu = document.getElementById("menu");
     const play = document.getElementById("play");
 
     // game.addBeatmap(beatMap);
     game.addListeners();
     gameplay.drawPressedKeys(ctx);
     play.addEventListener("click", () => {
-        game.animate();
-        // setTimeout(() => { game.animate(); }, 5000);
-    });
+        // menu.className="hidden";
+        console.log(gameplay.gameOver);
+        menu.className="fade-out";
+        setTimeout(()=> {menu.className="hidden";}, 2000);
+        setTimeout(()=> {
+            canvas.className = "game fade-in-fast";
+            score.className = "fade-in-fast";
+            game.animate();
+        }, 2100);
+        console.log(gameplay.gameOver);
 
-    setTimeout(() => {setInterval(gameplay.addRandomNote, 500); }, 5000);
+        // setTimeout(() => { game.animate(); }, 3000);
+    });
+    setTimeout(() => {setInterval(gameplay.addRandomNote, 500); }, 7000);
     
 });
 
@@ -688,7 +732,8 @@ class TopKeys {
             ctx.quadraticCurveTo(this.squareX - 10, this.squareY, this.squareX, this.squareY);
             ctx.strokeStyle = "#67FCF1";
             ctx.stroke();
-            ctx.fillStyle = "#67FCF1";
+            // ctx.fillStyle = "#67FCF1";
+            ctx.fillStyle = "white";
             ctx.font = '60px sans-serif';
             ctx.fillText("Q", 600 / 5 - 65, 65);
             ctx.fillText("W", 600 * 2 / 5 - 77, 65);

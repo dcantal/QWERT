@@ -101,8 +101,9 @@ body {
 }
 
 #title-text {
+    padding-top: 20px;
     text-align: center;
-    letter-spacing: 1em;
+    letter-spacing: 1.1em;
     font-size: 100px;
     padding-left: 1em;
     margin-bottom: 10px;
@@ -132,6 +133,68 @@ body {
 .game {
     width: 600;
     height: 800;
+}
+
+.get-smaller {
+  animation: getSmaller ease 2s;
+  -webkit-animation: getSmaller ease 2s;
+  -moz-animation: getSmaller ease 2s;
+  -o-animation: getSmaller ease 2s;
+  -ms-animation: getSmaller ease 2s;
+}
+
+@keyframes getSmaller{
+  0% {
+    font-size: 100px;
+    letter-spacing: 1em;
+  }
+  100% {
+    font-size: 60px;
+    letter-spacing: 1.1em;
+  }
+}
+
+@-moz-keyframes getSmaller {
+  0% {
+    font-size: 100px;
+    letter-spacing: 1em;
+  }
+  100% {
+    font-size: 60px;
+    letter-spacing: 1.1em;
+  }
+}
+@-webkit-keyframes getSmaller {
+  0% {
+    font-size: 100px;
+    letter-spacing: 1em;
+  }
+  100% {
+    font-size: 60px;
+    letter-spacing: 1.1em;
+  }
+}
+
+@-o-keyframes getSmaller {
+  0% {
+    font-size: 100px;
+    letter-spacing: 1em;
+  }
+  100% {
+    font-size: 60px;
+    letter-spacing: 1.1em;
+  }
+}
+
+@-ms-keyframes getSmaller {
+  0% {
+    font-size: 100px;
+    letter-spacing: 1em;
+  }
+  100% {
+    font-size: 60px;
+    letter-spacing: 1.1em;
+  }
 }
 
 .fade-in {
@@ -248,3 +311,16 @@ body {
   }
 }
 
+#countdown-text { 
+  color: white;
+  font-size: 100px;
+}
+
+#countdown {
+  position: absolute;
+  z-index: 10;
+  color: white;
+  text-align: center;
+  width: 600px;
+  top: 50%;
+}

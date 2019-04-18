@@ -48,19 +48,34 @@
                 <br>
                 <h1 id="play">&nbsp;PLAY</h1>
             </div>
+            <div id="countdown" class="hidden">
+                <h1 id="countdown-text"></h1>
+            </div>
             <div id="pause-menu" class="hidden">
                 <h1>PAUSED</h1>
+                <br>
+                <br>
                 <h2>Press P to continue</h2>
+                <br>
+                <h2>Press Z to restart</h2>
             </div>
             <div id="game-over" class="hidden">
                 <h1>GAME OVER</h1>
-                <h2>Press something to continue</h2>
+                <br>
+                <br>
+                <h2>Press Z to restart</h2>
+            </div>
+            <div id="level-passed" class="hidden">
+                <h1>LEVEL PASSED</h1>
+                <br>
+                <br>
+                <h2>Press anything to continue</h2>
             </div>
             <canvas id="myCanvas" width="600" height=500 class="hidden"></canvas>
         </div>
         <div class="body-right">
             <!-- <h1>MUTE</h1> -->
-            <h1 id="score-text"></h1>
+            <h1 id="score-text" class="hidden">Score: </h1>
             <!-- <canvas id="scoreCanvas" class="hidden"></canvas> -->
         </div>
     </div>

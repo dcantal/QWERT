@@ -681,10 +681,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = document.getElementById("menu");
     const play = document.getElementById("play");
     let currentSong = new howler__WEBPACK_IMPORTED_MODULE_4__["Howl"]({
-        src: ['songs/FunkyTown.mp3'],
+        src: ['songs/medasin-home-cut.mp3'],
         autoplay: false,
         loop: false,
-        volume: 0.2,
+        volume: 0.6,
     });
 
 
@@ -703,6 +703,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     play.addEventListener("click", () => {
+        currentSong.play();
         titleText.className = "get-smaller";
         menu.className = "fade-out";
         setTimeout(() => { menu.className = "hidden"; }, 1500);
@@ -719,8 +720,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             countdownDiv.className = "hidden";
         }, 7000);
-        setTimeout(currentSong.play, 7000);
-        setTimeout(() => { setInterval(gameplay.addRandomNote, 480); }, 7000);
+        // setTimeout(currentSong.play, 7000);
+        setTimeout(() => { setInterval(gameplay.addRandomNote, 413); }, 7000);
         setTimeout(() => { setInterval(gameplay.addSecond, 1000); }, 7000);
     });
 

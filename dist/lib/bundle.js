@@ -399,8 +399,10 @@ class Gameplay {
         this.score = 0;
         this.time = 0;
         this.scoreDiv = document.getElementById("score-text");
+        this.overScore = document.getElementById("game-over-score");
         this.gameOver = false;
         this.gameOverScreen = document.getElementById("game-over");
+        this.hitMessage  = document.getElementById("hit-message");
     }
 
     addPressedKey(ctx, val) {
@@ -442,7 +444,7 @@ class Gameplay {
     }
 
     addSecond() {
-        this.time += 1;
+        this.time = this.time + 1;
     }
 
     drawPressedKeys(ctx){
@@ -472,29 +474,38 @@ class Gameplay {
     }
 
     checkSuccess() {
+        let that = this;
         this.pressedKeys.forEach((pressedKey) => {
             this.notes.forEach((note) => {
                 if (pressedKey.successHit(note)) {
                     this.removeNote(note);
                     this.score += 10;
+                    if (that.score < -10) {
+                        this.scoreDiv.className = "negative";
+                    } else if (that.score > 10) {
+                        this.scoreDiv.className = "positive";
+                    }
                     this.scoreDiv.innerText = "SCORE: " + this.score.toString();
-                    console.log(this.score);
+                    this.hitMessage.className = "great";
+                    setTimeout(() => { this.hitMessage.className = ""; }, 500);
+                    this.hitMessage.innerText = "GREAT";
+                    setTimeout(() => { this.hitMessage.innerText = ""; }, 500);
                 }
             });
         });
     }
 
     checkOver() {
-        if (this.score < -200) {
+        if (this.score < -200 || this.time == 61) {
+            console.log(`gameplay time: ${this.time} `);
+            this.overScore.innerText = "Final Score: " + this.score.toString();
             this.scoreDiv.innerText = "SCORE: " + this.score.toString();
-            console.log(this.score);
-            console.log(this.time);
             this.gameOver = true;
         }
     }
 
     checkLevelPassed() {
-        console.log(this.time);
+        // console.log(this.time);
         if (this.time == 20) {
             this.levelPassed = true;
         }
@@ -505,7 +516,10 @@ class Gameplay {
             console.log("missed");
             this.score -= 10;
             this.scoreDiv.innerText = "SCORE: " + this.score.toString();
-            console.log(this.score);
+            this.hitMessage.className = "missed";
+            setTimeout(() => { this.hitMessage.className = ""; }, 500);
+            this.hitMessage.innerText = "MISSED";
+            setTimeout(() => {this.hitMessage.innerText = "";}, 500);
             return true;
         } else {
             return false;
@@ -518,9 +532,17 @@ class Gameplay {
         });
     }
 
+    addRandomNotes() {
+        let s1 = setInterval(addRandomNote, 413);
+        return s1;
+    }
+
     addRandomNote() {
-        let key = this.values[Math.floor(Math.random() * 5)];
-        this.addNote(key);
+        if (this.time < 58) {
+            let key = this.values[Math.floor(Math.random() * 5)];
+            this.addNote(key);
+        }
+
     }
 
 
@@ -673,6 +695,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countdownDiv = document.getElementById("countdown");
     const countdownText = document.getElementById("countdown-text");
     const titleText = document.getElementById("title-text");
+    let time = 0;
     // const ctxScore = score.getContext("2d");
     // ctxScore.canvas.height = window.innerHeight-20;
     const topKeys = new _top_keys__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
@@ -680,12 +703,73 @@ document.addEventListener("DOMContentLoaded", () => {
     const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx, beatMap);
     const menu = document.getElementById("menu");
     const play = document.getElementById("play");
-    let currentSong = new howler__WEBPACK_IMPORTED_MODULE_4__["Howl"]({
+
+    function speed1() {
+        let s1 = setInterval(gameplay.addRandomNote, 600);
+    }
+
+    function speed2() {
+        setInterval(gameplay.addRandomNote, 413);
+    }
+
+    function speed3() {
+        setInterval(gameplay.addRandomNote, 300);
+    }
+
+
+    let currentSong3 = new howler__WEBPACK_IMPORTED_MODULE_4__["Howl"]({
         src: ['songs/medasin-home-cut.mp3'],
         autoplay: false,
         loop: false,
         volume: 0.6,
+        rate: 1.3,
+        onplay: () => {
+            let s3 = speed3();
+            setTimeout(() => {clearInterval(s3);}, 50000);
+        }
     });
+    let currentSong2 = new howler__WEBPACK_IMPORTED_MODULE_4__["Howl"]({
+        src: ['songs/medasin-home-cut.mp3'],
+        autoplay: false,
+        loop: false,
+        volume: 0.6,
+        rate: 1,
+        onplay: () => {
+            let s2 = speed2();
+            setTimeout(() => {clearInterval(s2);}, 68000);
+        },
+        onend: () => {
+            currentSong3.play();
+        }
+    });
+    let currentSong1 = new howler__WEBPACK_IMPORTED_MODULE_4__["Howl"]({
+        src: ['songs/medasin-home-cut.mp3'],
+        autoplay: false,
+        loop: false,
+        volume: 0.6,
+        rate: 1,
+        onplay: () => {
+            // console.log("testing");
+            // setTimeout(console.log("testing later"), 7000);
+            // setTimeout(() => {console.log("testing later");}, 7000);
+            // let s1 = setTimeout(speed1, 7000);
+            // setTimeout(() => {clearInterval(s1);}, 72000);
+            // let s1 = speed1();
+            setTimeout(() => {speed2();}, 7000 );
+            // setTimeout(() => {clearInterval(s1);}, 72000);
+            
+        },
+        // onend: () => {
+        //     clearInterval(s1);
+        //     currentSong2.play();
+        // }
+    });
+    // let currentSong3 = new Howl({
+    //     src: ['songs/medasin-home-cut.mp3'],
+    //     autoplay: false,
+    //     loop: true,
+    //     volume: 0.6,
+    // });
 
 
     // game.addBeatmap(beatMap);
@@ -702,8 +786,19 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("counted down");
         }
     }
+
+
+
     play.addEventListener("click", () => {
-        currentSong.play();
+        let id1 = currentSong1.play();
+        setTimeout(() => {currentSong1.fade(1,0,3000,id1);}, 59000);
+        // let id2 = currentSong2.play();
+        // let id3 = currentSong3.play();
+        // setTimeout(currentSong.fade(1,0,1000, id1), 67000);
+        // setTimeout(currentSong2.play(), 68172);
+        // setTimeout(currentSong2.rate(1.5, id2), 60000);
+        // setTimeout(currentSong3.rate(1.5, id2), 60000);
+
         titleText.className = "get-smaller";
         menu.className = "fade-out";
         setTimeout(() => { menu.className = "hidden"; }, 1500);
@@ -720,9 +815,25 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             countdownDiv.className = "hidden";
         }, 7000);
+
         // setTimeout(currentSong.play, 7000);
-        setTimeout(() => { setInterval(gameplay.addRandomNote, 413); }, 7000);
-        setTimeout(() => { setInterval(gameplay.addSecond, 1000); }, 7000);
+        // setTimeout(() => { setInterval(gameplay.addRandomNote, 413); }, 7000);
+        // setTimeout(speed1, 7000);
+        // setTimeout(clearInterval(s1), 72000);
+        // setTimeout(speed2, 72000);
+        // setTimeout(clearInterval(s2), 117333);
+        // setTimeout(() => { setInterval(gameplay.addSecond, 1000); }, 7000);
+        setInterval(() => {time += 1;}, 1000);
+        setInterval(() => {gameplay.time = time;}, 1000);
+        // if (time === 7 ) {
+        //     currentSong1.play();
+        //     let id1 = setInterval(gameplay.addRandomNote, 600);
+        // }
+        // if (time === 70) {
+        //     clearInterval(id1);
+        // }
+        
+        // setInterval(gameplay.addSecond, 1000);
     });
 
     

@@ -25,6 +25,31 @@ body {
   width: 600px;
 }
 
+#game-over-score {
+  padding: 20px;
+  /* border-top: 2px solid #67FCF1; */
+  border: 2px solid #67FCF1;
+}
+
+.negative {
+  color: #fc676c;
+}
+
+.positive {
+  color: #67FCF1;
+}
+
+
+.missed {
+  color: #fc676c;
+  font-weight: 700;
+}
+
+.great {
+  color: #67FCF1;
+  font-weight: 700;
+}
+
 .body-right {
     width: 33%;
     display: flex;

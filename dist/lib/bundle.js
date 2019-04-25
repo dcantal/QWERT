@@ -249,6 +249,7 @@ class Game {
         this.tPressed = false;
         this.allPressed = false;
         this.paused = false;
+        this.started = false;
         this.keyDownHandler = this.keyDownHandler.bind(this);
         this.keyUpHandler = this.keyUpHandler.bind(this);
         this.addBeatmap = this.addBeatmap.bind(this);
@@ -362,6 +363,14 @@ class Game {
         }
 
     }
+
+    drawStart() {
+        if (!this.started) {
+            this.gameplay.drawStartNotes(this.ctx);
+            this.gameplay.runStart();
+        }
+        requestAnimationFrame(this.drawStart.bind(this));
+    }
     
     animate() {
         this.draw();
@@ -465,6 +474,13 @@ class Gameplay {
         });
     }
 
+    drawStartNotes(ctx) {
+        ctx.clearRect(0, 0, 600, 800);
+        this.notes.forEach((note) => {
+            note.draw(ctx);
+        });
+    }
+
     removePressedKey() {
         this.pressedKeys.splice(0,1);
     }
@@ -512,7 +528,7 @@ class Gameplay {
     }
 
     missed(note) {
-        if (note.pos[1] < -20) {
+        if (note.pos[1] < -30) {
             console.log("missed");
             this.score -= 10;
             this.scoreDiv.innerText = "SCORE: " + this.score.toString();
@@ -526,9 +542,23 @@ class Gameplay {
         }
     }
 
+    offScreen(note) {
+        if (note.pos[1] < -600) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     runMap() {
         this.notes.forEach((note) => {
             return (this.missed(note)) ? this.removeNote(note) : note.move();
+        });
+    }
+
+    runStart() {
+        this.notes.forEach((note) => {
+            return (this.offScreen(note)) ? this.removeNote(note) : note.move();
         });
     }
 
@@ -685,12 +715,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Initialize Firebase
+    // var config = {
+    //     apiKey: "AIzaSyDbfcFzbgAP7qMsakCfmjFsEZAkgD2NYAg",
+    //     authDomain: "qwert-ba168.firebaseapp.com",
+    //     databaseURL: "https://qwert-ba168.firebaseio.com",
+    //     projectId: "qwert-ba168",
+    //     storageBucket: "qwert-ba168.appspot.com",
+    //     messagingSenderId: "835382272049"
+    // };
+    // firebase.initializeApp(config);
+
+    // const database = firebase.database();
+    // const ref = database.ref('scores');
+
+    // let scoreEnd;
+    // let highScore;
+
+    // firebase.database().ref("sharedHighScore").on("value", function (snapshot) {
+    //     highScore = snapshot.val();
+    // });
+
     const canvas = document.getElementById("myCanvas");
     const ctx = canvas.getContext("2d");
+    const overlay = document.getElementById("myCanvasStart");
+    const ctx2 = overlay.getContext("2d");
     const beatMap = _beatmaps_test_beatmap__WEBPACK_IMPORTED_MODULE_3__["BEATMAP"];
     ctx.canvas.height = window.innerHeight-20;
+    ctx2.canvas.height = window.innerHeight-20;
     const score = document.getElementById("score-text");
     const countdownDiv = document.getElementById("countdown");
     const countdownText = document.getElementById("countdown-text");
@@ -700,7 +754,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ctxScore.canvas.height = window.innerHeight-20;
     const topKeys = new _top_keys__WEBPACK_IMPORTED_MODULE_2__["default"](ctx);
     const gameplay = new _gameplay__WEBPACK_IMPORTED_MODULE_1__["default"](topKeys);
+    const overlayTrack = new _gameplay__WEBPACK_IMPORTED_MODULE_1__["default"](topKeys);
     const game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](gameplay, ctx, beatMap);
+    const overlayGame = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](overlayTrack, ctx2, beatMap);
     const menu = document.getElementById("menu");
     const play = document.getElementById("play");
 
@@ -786,10 +842,14 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("counted down");
         }
     }
+    overlayGame.drawStart();
+    setInterval(overlayTrack.addRandomNote, 1000);
 
 
 
     play.addEventListener("click", () => {
+        overlayGame.started = true;
+        gameplay.drawPressedKeys(ctx);
         let id1 = currentSong1.play();
         setTimeout(() => {currentSong1.fade(1,0,3000,id1);}, 59000);
         // let id2 = currentSong2.play();
@@ -801,6 +861,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         titleText.className = "get-smaller";
         menu.className = "fade-out";
+        overlay.className = "fade-out";
+        setTimeout(() => { overlay.className = "hidden"; }, 1500);
         setTimeout(() => { menu.className = "hidden"; }, 1500);
         setTimeout(() => {
             countdown();
